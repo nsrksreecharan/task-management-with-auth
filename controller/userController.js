@@ -34,7 +34,7 @@ exports.loginUser=async(req,res,next)=>{
         if(!user.checkPassword(password)){
             return res.status(404).json({message:"Invalid Password"});
         }
-        const token=await tokenServices(user.id);
+        const token=await tokenServices.createToken(user.id);
         res.json({
             message:"User Logged in Successfully",
             token,
