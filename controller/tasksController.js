@@ -29,6 +29,19 @@ exports.updateTaskById=async(req,res,next)=>{
     }
 }
 
+exports.updateTasks=async(req,res,next)=>{
+    try{
+        if(!Array.isArray(req.body.taskIds)){
+            res.status(404).json({message:"Expected Array of Ids"})
+        }
+        const tasks=await taskServices.updateTasksMany(req.body);
+        if(!tasks) res.status(404).json({message:"Tasks not found"});
+        res.json({tasks})
+    }catch(err){
+        next(err);
+    }
+}
+
 exports.postTask=async(req,res,next)=>{
     try{
         const task=await taskServices.createTask(req.body);
@@ -42,6 +55,18 @@ exports.deleteTaskById=async(req,res,next)=>{
     try{
         const task=await taskServices.deleteTaskById(req.params.id);
         res.json({message:"Task Deleted Successfully"});
+    }catch(err){
+        next(err);
+    }
+}
+
+exports.deleteMany=async(req,res,next)=>{
+    try{
+        if(!Array.isArray(req.body.taskIds)){
+            res.status(404).json({message:"Expected Array of Ids"})
+        }
+        const task=await taskServices.deleteTasks(req.body);
+        res.json({message:"Tasks Deleted Successfully"});
     }catch(err){
         next(err);
     }

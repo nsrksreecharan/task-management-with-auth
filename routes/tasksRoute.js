@@ -5,6 +5,8 @@ const taskController=require("../controller/tasksController");
 router.route("/")
     .get(taskController.getTasks)
     .post(taskController.postTask)
+    .put(taskController.updateTasks)
+    .delete(taskController.deleteMany)
 router.route("/:id")
     .get(taskController.getTaskById)
     .put(taskController.updateTaskById)
