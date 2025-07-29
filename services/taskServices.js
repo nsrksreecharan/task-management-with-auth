@@ -16,10 +16,6 @@ exports.getLeaderBoard=()=>{
                 completedTasks:{ $sum:1 },
             }
         },
-        
-        {
-            $unwind:"user"
-        },// to flatten the result of lookup array
         {
             $lookup:{
                 from:"users",
@@ -28,6 +24,9 @@ exports.getLeaderBoard=()=>{
                 as:"user"
             }
         },
+        {
+            $unwind:"$user"
+        },// to flatten the result of lookup array
         {
             $project:{
                 _id:0,
