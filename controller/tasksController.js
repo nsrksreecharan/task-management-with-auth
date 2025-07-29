@@ -23,7 +23,7 @@ exports.updateTaskById=async(req,res,next)=>{
     try{
         const task=await taskServices.updateTaskById(req.params.id,req.body);
         if(!task) res.status(404).json({message:"Task not found"});
-        res.josn({task})
+        res.json({task})
     }catch(err){
         next(err);
     }
