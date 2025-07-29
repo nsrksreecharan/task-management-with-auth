@@ -43,7 +43,7 @@ exports.getUserStats=async(req,res,next)=>{
 
 exports.updateTaskById=async(req,res,next)=>{
     try{
-        const task=await taskServices.updateTaskById(req.params.id,req.body);
+        const task=await taskServices.updateTaskById(req.params.id,{...req.body,userId:req.user._id});
         if(!task) res.status(404).json({message:"Task not found"});
         res.json({task})
     }catch(err){
@@ -66,7 +66,7 @@ exports.updateTasks=async(req,res,next)=>{
 
 exports.postTask=async(req,res,next)=>{
     try{
-        const task=await taskServices.createTask(req.body);
+        const task=await taskServices.createTask({...req.body,userId:req.user._id});
         res.status(201).json({message:"Task Created Successfully",task});
     }catch(err){
         next(err);
