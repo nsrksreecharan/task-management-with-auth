@@ -23,7 +23,7 @@ exports.getTaskById=async(req,res,next)=>{
 exports.getLeaderBoard=async(req,res,next)=>{
     try{
         const leaderBoard=await taskServices.getLeaderBoard();
-        if(!task) res.status(404).json({message:"No Data Found"});
+        if(!leaderBoard) res.status(404).json({message:"No Data Found"});
         res.json({leaderBoard});
     }catch(err){
         next(err);
