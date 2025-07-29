@@ -13,6 +13,13 @@ const taskSchema=mongoose.Schema({
         default:"",
     },
     dueDate:Date,
+    checked:{
+        type:Boolean,
+    },
+    description:{
+        type:String,
+        maxlength: [250, "Description must be at most 250 characters long"]
+    }
 },{
     timestamps:true
 });
