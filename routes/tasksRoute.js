@@ -7,6 +7,12 @@ router.route("/")
     .post(taskController.postTask)
     .put(taskController.updateTasks)
     .delete(taskController.deleteMany)
+
+router.route("/leaderboard")
+    .get(taskController.getLeaderBoard)
+
+router.route("/user-stats")
+    .get(taskController.getUserStats)
 router.route("/:id")
     .get(taskController.getTaskById)
     .put(taskController.updateTaskById)

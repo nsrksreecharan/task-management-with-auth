@@ -19,6 +19,28 @@ exports.getTaskById=async(req,res,next)=>{
     }
 }
 
+
+exports.getLeaderBoard=async(req,res,next)=>{
+    try{
+        const leaderBoard=await taskServices.getLeaderBoard();
+        if(!task) res.status(404).json({message:"No Data Found"});
+        res.json({leaderBoard});
+    }catch(err){
+        next(err);
+    }
+}
+
+exports.getUserStats=async(req,res,next)=>{
+    try{
+        const userId=req.user._id;
+        const stats=await taskServices.getUserStats(userId);
+        if(!stats) res.status(404).json({message:"No Data Found"});
+        res.json({stats});
+    }catch(err){
+        next(err);
+    }
+}
+
 exports.updateTaskById=async(req,res,next)=>{
     try{
         const task=await taskServices.updateTaskById(req.params.id,req.body);

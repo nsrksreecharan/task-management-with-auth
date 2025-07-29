@@ -1,6 +1,11 @@
 const mongoose=require("mongoose");
 
 const taskSchema=mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users", // assuming your user model is called 'User'
+        required: true,
+    },
     task:{type:String,require:true},
     status:{
         type:String,
