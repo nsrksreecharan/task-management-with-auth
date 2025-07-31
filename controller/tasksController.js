@@ -2,7 +2,8 @@ const taskServices=require("../services/taskServices");
 
 exports.getTasks=async(req,res,next)=>{
     try{
-        const tasks=await taskServices.getAllTasks();
+        const userId=req.user._id;
+        const tasks=await taskServices.getAllTasks(userId);
         res.json({tasks});
     }catch(err){
         next(err);
@@ -20,13 +21,17 @@ exports.getTaskById=async(req,res,next)=>{
 }
 
 
-exports.getLeaderBoard=async(req,res,next)=>{
+
+
+exports.getUserInfo=async(req,res,next)=>{
     try{
-        const leaderBoard=await taskServices.getLeaderBoard();
-        if(!leaderBoard) res.status(404).json({message:"No Data Found"});
-        res.json({leaderBoard});
-    }catch(err){
-        next(err);
+        const userId=req.user._id;
+        const userInfo=await taskServices.getUserData(userId);
+        console.log(userInfo,"userInfo");
+        if(!userInfo) res.status(404).json({message:"No Data Found"});
+        res.json({userInfo});
+    }catch(e){
+        
     }
 }
 

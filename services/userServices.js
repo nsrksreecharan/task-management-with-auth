@@ -4,3 +4,40 @@ exports.getUserByEmail=(email)=>User.findOne({email}).select("+password");
 exports.getUserById=(id)=>User.findById(id).select("-password");//findOne({_id:id})
 exports.createUser=(data)=>User.create(data);
 exports.deleteUser=(id)=>User.findByIdAndDelete(id);
+
+exports.getLeaderBoard=()=>{
+    return User.aggregate([
+        {
+            $lookup:{
+                from:"tasks",
+                localField:"_id",
+                foreignField:"userId",
+                as:"userTasks"
+            }
+        },
+        {
+            $addFields:{
+                completedTasks:{
+                    $size:{
+                        $filter:{
+                            input:"$userTasks",
+                            as:"tasks",
+                            cond:{$eq:["$$tasks.status","completed"]}
+                        }
+                    }
+                }
+            }
+        },
+        {
+            $project:{
+                _id:0,
+                username:"$name",
+                email:1,
+                completedTasks:1
+            }
+        },
+        {
+            $sort:{completedTasks:-1},
+        }
+    ])
+};

@@ -49,3 +49,13 @@ exports.loginUser=async(req,res,next)=>{
         next(err);
     }
 }
+
+exports.getLeaderBoard=async(req,res,next)=>{
+    try{
+        const leaderBoard=await userServices.getLeaderBoard();
+        if(!leaderBoard) res.status(404).json({message:"No Data Found"});
+        res.json({leaderBoard});
+    }catch(err){
+        next(err);
+    }
+}
