@@ -21,8 +21,6 @@ app.use(
   })
 );
 
-app.options("*", cors()); 
-
 app.use(express.json());
 app.use("/task-api",protect,tasksRoute);
 app.use("/user",userRoute);
