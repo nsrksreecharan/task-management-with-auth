@@ -14,19 +14,15 @@ const allowedOrigins = [
   'https://nsrksreecharan.github.io'
 ];
 
-app.use(
-  cors({
-    origin: function (origin, callback) {
-      // allow requests with no origin (like mobile apps, curl)
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-      } else {
-        return callback(new Error('Not allowed by CORS'));
-      }
-    },
-  })
-);
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
+app.options('*', cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
 
 app.use(express.json());
 app.use("/task-api",protect,tasksRoute);
