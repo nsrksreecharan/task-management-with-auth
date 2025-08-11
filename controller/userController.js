@@ -32,8 +32,9 @@ exports.loginUser=async(req,res,next)=>{
             console.log(user,"user")
             return res.status(404).json({message:"User not found with this email"});
         }
-        if(!user.checkPassword(password)){
-            return res.status(404).json({message:"Invalid Password"});
+        const isMatch = await user.checkPassword(password);
+        if (!isMatch) {
+        return res.status(404).json({ message: "Invalid Password" });
         }
         const token=await tokenServices.createToken(user.id);
         res.json({
