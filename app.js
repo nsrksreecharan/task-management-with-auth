@@ -8,7 +8,21 @@ const {protect}=require("./middleware/authentication");
 
 const app=express();
 app.use(morgan("dev"));
-app.use(cors());
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://nsrksreecharan.github.io",
+      "https://nsrksreecharan.github.io/Task-Management-App",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
+
+app.options("*", cors()); 
+
 app.use(express.json());
 app.use("/task-api",protect,tasksRoute);
 app.use("/user",userRoute);
