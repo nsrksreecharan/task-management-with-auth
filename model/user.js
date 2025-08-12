@@ -27,9 +27,9 @@ userSchema.pre("save",async function(next){
     next();
 });
 
-userSchema.methods.checkPassword=function(password){
-    console.log("password",password,"this.password",this.password,"bcrypt.compare(password,this.password)",bcrypt.compare(password,this.password))
-    return bcrypt.compare(password,this.password);
+userSchema.methods.checkPassword=async function (password){
+    console.log("password",password,"this.password",this.password,"bcrypt.compare(password,this.password)",await bcrypt.compare(password,this.password))
+    return await bcrypt.compare(password,this.password);
 }
 
 module.exports=mongoose.model("users",userSchema);
